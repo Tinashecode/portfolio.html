@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tinashe Muchemwa – Remote Professional Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #e8c97a;
+    --black: #0e0e0e;
+    --dark: #161616;
+    --card: #1c1c1c;
+    --border: #2a2a2a;
+    --white: #f5f3ee;
+    --muted: #888;
+    --text: #d4d0c8;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--black); color: var(--text); line-height: 1.6; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* NAV */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 32px; background: rgba(14,14,14,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--white); text-decoration: none; }
+  .nav-logo span { color: var(--gold); }
+  nav { display: flex; gap: 24px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+  .nav-hire { background: var(--gold); color: var(--black); padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+  .nav-hire:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 32px 60px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(201,168,76,0.3); background: rgba(201,168,76,0.06); color: var(--gold); font-size: 12px; font-weight: 500; letter-spacing: 1.5px; padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 5vw, 68px); font-weight: 900; line-height: 1.05; color: var(--white); margin-bottom: 8px; }
+  .hero h1 span { color: var(--gold); }
+  .hero-title { font-size: 15px; color: var(--gold); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 36px; max-width: 480px; }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--black); padding: 13px 26px; border-radius: 7px; font-size: 14px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-secondary { border: 1px solid var(--border); color: var(--white); padding: 13px 26px; border-radius: 7px; font-size: 14px; font-weight: 500; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* HERO STATS */
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 20px; transition: border-color 0.2s; }
+  .stat-card:hover { border-color: rgba(201,168,76,0.4); }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .stat-card.wide { grid-column: span 2; }
+  .available-badge { display: flex; align-items: center; gap: 10px; padding: 16px 20px; }
+  .pulse { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); } 70% { box-shadow: 0 0 0 8px rgba(34,197,94,0); } 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); } }
+  .available-text { font-size: 14px; font-weight: 500; color: var(--white); }
+  .available-sub { font-size: 12px; color: #22c55e; }
+
+  /* SECTIONS */
+  .section { padding: 88px 32px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.1; }
+  .section-sub { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+  .section-head { margin-bottom: 52px; }
+  .section-head.center { text-align: center; }
+  .section-head.center .section-sub { margin: 0 auto; }
+  .dark-section { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .about-text p { font-size: 15px; color: var(--muted); line-height: 1.9; margin-bottom: 16px; }
+  .about-text p strong { color: var(--white); }
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item { display: flex; gap: 16px; padding-bottom: 28px; position: relative; }
+  .timeline-item:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 32px; bottom: 0; width: 1px; background: var(--border); }
+  .timeline-dot { width: 32px; height: 32px; border-radius: 50%; background: var(--card); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; color: var(--gold); font-weight: 700; }
+  .timeline-content h4 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+  .timeline-content p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .timeline-year { font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .skill-category { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: border-color 0.2s, transform 0.2s; }
+  .skill-category:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+  .skill-cat-icon { width: 44px; height: 44px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .skill-cat-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .skill-category h3 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 14px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); color: var(--gold-light); font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 20px; }
+
+  /* SERVICES */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .service-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0; transition: opacity 0.2s; }
+  .service-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); }
+  .service-card:hover::before { opacity: 1; }
+  .service-num { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: rgba(201,168,76,0.12); line-height: 1; margin-bottom: 12px; }
+  .service-card h3 { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+  .service-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+  .service-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .service-card ul li { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .service-card ul li::before { content: ''; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 20px; }
+  .exp-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px 32px; transition: border-color 0.2s; }
+  .exp-card:hover { border-color: rgba(201,168,76,0.3); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .exp-title { font-size: 17px; font-weight: 600; color: var(--white); }
+  .exp-company { font-size: 14px; color: var(--gold); font-weight: 500; margin-top: 2px; }
+  .exp-date { font-size: 12px; color: var(--muted); background: var(--dark); border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+  .exp-bullets li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+  .exp-bullets li::before { content: ''; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+
+  /* PORTFOLIO */
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .portfolio-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .portfolio-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+  .portfolio-thumb { height: 180px; background: linear-gradient(135deg, #1c1c1c, #252525); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .portfolio-upload { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 2px dashed rgba(201,168,76,0.2); margin: 12px; border-radius: 8px; }
+  .portfolio-upload svg { width: 32px; height: 32px; stroke: rgba(201,168,76,0.4); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .portfolio-upload p { font-size: 12px; color: var(--muted); text-align: center; }
+  .portfolio-thumb-label { position: absolute; bottom: 12px; left: 12px; background: var(--gold); color: var(--black); font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
+  .portfolio-body { padding: 20px; }
+  .portfolio-body h4 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .portfolio-body p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .portfolio-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .p-tag { background: var(--dark); border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+
+  /* CERTS */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; display: flex; gap: 14px; align-items: flex-start; transition: border-color 0.2s; }
+  .cert-card:hover { border-color: rgba(201,168,76,0.4); }
+  .cert-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cert-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .cert-info h4 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 4px; line-height: 1.3; }
+  .cert-info p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .cert-issuer { color: var(--gold); font-size: 11px; font-weight: 600; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 14px; }
+  .contact-tile { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; text-decoration: none; display: block; transition: border-color 0.2s; }
+  .contact-tile:hover { border-color: rgba(201,168,76,0.4); }
+  .contact-tile-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .contact-tile-value { font-size: 15px; font-weight: 600; color: var(--gold); }
+  .contact-tile-value.white { color: var(--white); }
+  .contact-form { display: flex; flex-direction: column; gap: 12px; }
+  .contact-form input, .contact-form textarea { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; color: var(--white); font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: #555; }
+  .contact-form textarea { resize: none; }
+  .contact-submit { background: var(--gold); color: var(--black); padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: none; display: block; text-align: center; transition: background 0.2s; }
+  .contact-submit:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 36px 32px; text-align: center; }
+  .footer-name { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--white); margin-bottom: 6px; }
+  .footer-name span { color: var(--gold); }
+  .footer-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 12px; color: #444; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); border: none; }
+
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .section { padding: 60px 20px; }
+    .hero { padding: 100px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Tinashe <span>Muchemwa</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#services">Services</a>
+      <a href="#experience">Experience</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="mailto:muchemwatp@gmail.com" class="nav-hire">Hire Me</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Available for Remote Work</div>
+      <h1>Tinashe<br /><span>Muchemwa</span></h1>
+      <div class="hero-title">Virtual Assistant &middot; Digital Marketing &middot; Data Analytics &middot; Educator</div>
+      <p>Versatile and self-driven remote professional with 3+ years of experience across administration, digital marketing, data analytics, teaching and construction management. Google-certified. Based in Pretoria, serving clients globally.</p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="btn-primary">View My Work</a>
+        <a href="https://wa.me/27643730345" target="_blank" class="btn-secondary">WhatsApp Me</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">3+</div>
+        <div class="stat-label">Years of remote and on-site professional experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Google certifications — Analytics &amp; Digital Marketing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Industries worked across professionally</div>
+      </div>
+      <div class="stat-card wide">
+        <div class="available-badge">
+          <div class="pulse"></div>
+          <div>
+            <div class="available-text">Open to Remote Opportunities</div>
+            <div class="available-sub">Part-time &middot; Full-time &middot; Contract &middot; Project-based &middot; Flexible hours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line" />
+
+<!-- ABOUT -->
+<section class="section dark-section" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">About Me</div>
+        <div class="section-title">Multi-Skilled Remote Professional</div>
+        <p>I am Tinashe Muchemwa — a versatile, self-driven freelancer based in <strong>Pretoria, South Africa</strong>, with over 3 years of experience supporting businesses, executives and institutions remotely and on-site.</p>
+        <p>I hold <strong>Google certifications in Data Analytics and Digital Marketing</strong>, and my background spans virtual assistance, social media management, content creation, TVET lecturing, college administration, and construction project support.</p>
+        <p>I deliver quality results independently, on time, and with strong written English communication — making me an ideal remote partner for <strong>startups, entrepreneurs, and growing businesses worldwide.</strong></p>
+        <p style="margin-top:20px;">
+          <strong>Email:</strong> <a href="mailto:muchemwatp@gmail.com" style="color:var(--gold);text-decoration:none;">muchemwatp@gmail.com</a><br/>
+          <strong>Phone/WhatsApp:</strong> <a href="https://wa.me/27643730345" style="color:var(--gold);text-decoration:none;">064 373 0345</a><br/>
+          <strong>Location:</strong> Pretoria, South Africa
+        </p>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:20px;">My Journey</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot">1</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2019 – 2022 &middot; Engineering</div>
+              <h4>National N Diploma – Civil Engineering</h4>
+              <p>ROSTEC Technical FET College — foundation in engineering, construction and technical systems</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">2</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2023 – 2024 &middot; Hospitality</div>
+              <h4>N6 Hospitality &amp; Catering Services</h4>
+              <p>DFPCFET College — customer service, operations and hospitality management</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">3</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2023 – 2024 &middot; VA &amp; Admin</div>
+              <h4>Virtual Administrative Support</h4>
+              <p>Remote support for Executive Director — inbox, scheduling, data entry, document preparation</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">4</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2023 – 2025 &middot; Teaching &amp; Marketing</div>
+              <h4>TVET Lecturer &amp; Marketing Support</h4>
+              <p>DFPCFET College — lecturing N4–N6 subjects, Head of Department, social media and admin</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">5</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2026 &middot; Certifications</div>
+              <h4>Google Data Analytics &amp; Digital Marketing</h4>
+              <p>Google-certified — data analytics, digital marketing, e-commerce and customer acquisition</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line" />
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="section-label">What I Bring</div>
+      <div class="section-title">Skills &amp; Tools</div>
+      <p class="section-sub">A comprehensive toolkit built across real-world roles, certified training and self-development.</p>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-category">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>Virtual Assistance</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Email &amp; Inbox Management</span>
+          <span class="skill-tag">Calendar Scheduling</span>
+          <span class="skill-tag">Data Entry</span>
+          <span class="skill-tag">Document Preparation</span>
+          <span class="skill-tag">Online Research</span>
+          <span class="skill-tag">Customer Support</span>
+          <span class="skill-tag">Task Coordination</span>
+          <span class="skill-tag">File Organisation</span>
+          <span class="skill-tag">Travel Coordination</span>
+          <span class="skill-tag">Lead Generation</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+        <h3>Data Analytics</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Microsoft Excel</span>
+          <span class="skill-tag">Google Sheets</span>
+          <span class="skill-tag">Data Cleaning</span>
+          <span class="skill-tag">Data Preparation</span>
+          <span class="skill-tag">Dashboards</span>
+          <span class="skill-tag">Reporting &amp; Insights</span>
+          <span class="skill-tag">Data-Driven Decisions</span>
+          <span class="skill-tag">Google Analytics</span>
+          <span class="skill-tag">Spreadsheet Analysis</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3>Digital Marketing</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Social Media Management</span>
+          <span class="skill-tag">Content Creation</span>
+          <span class="skill-tag">Email Marketing</span>
+          <span class="skill-tag">Meta Ads (Basic)</span>
+          <span class="skill-tag">Facebook Marketing</span>
+          <span class="skill-tag">Instagram Marketing</span>
+          <span class="skill-tag">WhatsApp Business</span>
+          <span class="skill-tag">Campaign Support</span>
+          <span class="skill-tag">Lead Generation</span>
+          <span class="skill-tag">Customer Engagement</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <h3>Design &amp; Creative</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Canva (Intermediate)</span>
+          <span class="skill-tag">Adobe (Basic)</span>
+          <span class="skill-tag">Marketing Visuals</span>
+          <span class="skill-tag">Social Media Graphics</span>
+          <span class="skill-tag">Graduation Booklets</span>
+          <span class="skill-tag">Promotional Content</span>
+          <span class="skill-tag">Presentations</span>
+          <span class="skill-tag">Landing Pages</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Teaching &amp; Education</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">NATED N4–N6 Lecturing</span>
+          <span class="skill-tag">English (FAL)</span>
+          <span class="skill-tag">Computer Practice</span>
+          <span class="skill-tag">Information Processing</span>
+          <span class="skill-tag">Hospitality Studies</span>
+          <span class="skill-tag">History of Art</span>
+          <span class="skill-tag">Lesson Planning</span>
+          <span class="skill-tag">Online Teaching</span>
+          <span class="skill-tag">Google Classroom</span>
+          <span class="skill-tag">Student Mentoring</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <h3>Tools &amp; Platforms</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Microsoft Office Suite</span>
+          <span class="skill-tag">Google Workspace</span>
+          <span class="skill-tag">Zoom / Google Meet</span>
+          <span class="skill-tag">Meta Business Suite</span>
+          <span class="skill-tag">Trello</span>
+          <span class="skill-tag">CRM Systems</span>
+          <span class="skill-tag">AI Tools</span>
+          <span class="skill-tag">Edusyms</span>
+          <span class="skill-tag">Gmail / Outlook</span>
+          <span class="skill-tag">WhatsApp Business</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line" />
+
+<!-- SERVICES -->
+<section class="section dark-section" id="services">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="section-label">What I Offer</div>
+      <div class="section-title">Remote Services</div>
+      <p class="section-sub">Four core service areas available to clients and businesses worldwide.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Virtual Assistance</h3>
+        <p>Full administrative and executive support handled remotely — so you can focus on growing your business.</p>
+        <ul>
+          <li>Email and inbox management</li>
+          <li>Calendar and appointment scheduling</li>
+          <li>Data entry and spreadsheet management</li>
+          <li>Document preparation and formatting</li>
+          <li>Online research and report writing</li>
+          <li>Customer support via email, chat and WhatsApp</li>
+          <li>Lead generation and CRM management</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Digital Marketing</h3>
+        <p>Growing your brand online with consistent content, community management, email campaigns and basic paid ads.</p>
+        <ul>
+          <li>Social media management (Facebook, Instagram, WhatsApp)</li>
+          <li>Content creation and graphic design (Canva)</li>
+          <li>Email marketing and campaign support</li>
+          <li>Basic Meta Ads (Facebook and Instagram)</li>
+          <li>Lead generation and customer engagement</li>
+          <li>Performance tracking and reporting</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Data Analytics &amp; Excel</h3>
+        <p>Turning raw data into clean, readable insights using Google-certified analytics skills and Excel expertise.</p>
+        <ul>
+          <li>Data cleaning and preparation</li>
+          <li>Excel and Google Sheets analysis</li>
+          <li>Dashboard and report building</li>
+          <li>Data entry and verification</li>
+          <li>Google Analytics reporting</li>
+          <li>Monthly summaries and decision support</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Online Teaching &amp; Tutoring</h3>
+        <p>Professional teaching and tutoring services for students and adult learners via Zoom or Google Meet.</p>
+        <ul>
+          <li>English (First Additional Language)</li>
+          <li>Computer Practice (N4–N6)</li>
+          <li>Information Processing (N4–N6)</li>
+          <li>Hospitality and Catering Studies</li>
+          <li>Business English for professionals</li>
+          <li>ICASS and exam preparation support</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line" />
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-label">Work History</div>
+      <div class="section-title">Professional Experience</div>
+      <p class="section-sub">Real roles, real responsibilities — delivered with professionalism and reliability.</p>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">TVET Lecturer &amp; Head of Department – Business Studies</div>
+            <div class="exp-company">DFPCFET College · Pretoria</div>
+          </div>
+          <div class="exp-date">Jan 2023 – Nov 2025</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Taught Civil Engineering, Computer Practice, Information Processing, History of Art and Hospitality subjects at N4–N6 level</li>
+          <li>Developed differentiated lesson plans to accommodate diverse learning styles</li>
+          <li>Prepared students for ICASS and National Examinations with targeted revision sessions</li>
+          <li>Used Google Classroom, Zoom, and PowerPoint for online and blended learning</li>
+          <li>Managed academic records, registers and departmental documentation</li>
+          <li>Led department meetings, staff training sessions and student progress reviews as Head of Department</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Digital Marketing &amp; Administrative Support</div>
+            <div class="exp-company">DFPCFET College · Pretoria</div>
+          </div>
+          <div class="exp-date">2023 – 2025</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Created and managed social media content across Facebook, Instagram and WhatsApp Business</li>
+          <li>Designed marketing visuals, graduation booklets and promotional content using Canva</li>
+          <li>Managed inbound enquiries via email, WhatsApp and phone — improving response time and professionalism</li>
+          <li>Maintained digital databases and organised student records accurately</li>
+          <li>Coordinated events including graduation planning, communication and logistics</li>
+          <li>Conducted research and prepared decision-support reports for management</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Virtual Administrative Support</div>
+            <div class="exp-company">Executive Director (Remote)</div>
+          </div>
+          <div class="exp-date">2023 – 2024</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Provided full remote administrative support including inbox management, scheduling and data entry</li>
+          <li>Prepared professional documents and maintained digital filing systems</li>
+          <li>Communicated professionally with clients and stakeholders remotely</li>
+          <li>Assisted with scheduling, reminders and task tracking for senior executive</li>
+          <li>Conducted online research and delivered structured summaries</li>
+          <li>Maintained strict confidentiality and consistently met deadlines</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line" />
+
+<!-- PORTFOLIO -->
+<section class="section dark-section" id="portfolio">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="section-label">My Work</div>
+      <div class="section-title">Portfolio &amp; Work Samples</div>
+      <p class="section-sub">Real examples of my work across data, marketing, design and administration.</p>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb">
+          <div class="portfolio-upload">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Upload Excel screenshot<br/>or data sample here</p>
+          </div>
+          <div class="portfolio-thumb-label">Data Analytics</div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Excel Data Dashboard</h4>
+          <p>Data cleaning, analysis and reporting using Excel and Google Sheets — monthly summaries and pivot tables.</p>
+          <div class="portfolio-tags"><span class="p-tag">Excel</span><span class="p-tag">Google Sheets</span><span class="p-tag">Reporting</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb">
+          <div class="portfolio-upload">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Upload social media post<br/>or campaign screenshot</p>
+          </div>
+          <div class="portfolio-thumb-label">Social Media</div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Social Media Content – DFPCFET College</h4>
+          <p>Created and managed Facebook, Instagram and WhatsApp Business content to support marketing campaigns.</p>
+          <div class="portfolio-tags"><span class="p-tag">Facebook</span><span class="p-tag">Instagram</span><span class="p-tag">Canva</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb">
+          <div class="portfolio-upload">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Upload graduation booklet<br/>or design sample</p>
+          </div>
+          <div class="portfolio-thumb-label">Design</div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Graduation Booklet Design</h4>
+          <p>Designed graduation booklets and promotional materials for college events using Canva.</p>
+          <div class="portfolio-tags"><span class="p-tag">Canva</span><span class="p-tag">Print Design</span><span class="p-tag">Events</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb">
+          <div class="portfolio-upload">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Upload lesson plan or<br/>teaching material</p>
+          </div>
+          <div class="portfolio-thumb-label">Teaching</div>
+        </div>
+        <div class="portfolio-body">
+          <h4>NATED Lesson Plans (N4–N6)</h4>
+          <p>Differentiated lesson plans for Computer Practice, English and Hospitality subjects at TVET level.</p>
+          <div class="portfolio-tags"><span class="p-tag">NATED</span><span class="p-tag">Curriculum</span><span class="p-tag">N4–N6</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb">
+          <div class="portfolio-upload">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Upload email template<br/>or VA work sample</p>
+          </div>
+          <div class="portfolio-thumb-label">Virtual Assistant</div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Executive Inbox &amp; Admin System</h4>
+          <p>Remote inbox management, scheduling and digital filing system set up for executive director support.</p>
+          <div class="portfolio-tags"><span class="p-tag">Gmail</span><span class="p-tag">Scheduling</span><span class="p-tag">Remote VA</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-card">
+        <div class="portfolio-thumb">
+          <div class="portfolio-upload">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Upload report, research doc<br/>or marketing sample</p>
+          </div>
+          <div class="portfolio-thumb-label">Research &amp; Reports</div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Decision-Support Research Reports</h4>
+          <p>Online research compiled into structured reports and summaries to support management decision-making.</p>
+          <div class="portfolio-tags"><span class="p-tag">Research</span><span class="p-tag">Reports</span><span class="p-tag">Admin</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line" />
+
+<!-- CERTS -->
+<section class="section" id="certificates">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="section-label">Credentials</div>
+      <div class="section-title">Certifications &amp; Qualifications</div>
+      <p class="section-sub">Formal training and certifications that back up my professional experience.</p>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cert-info">
+          <h4>Google Data Analytics Certificate</h4>
+          <p>Foundations, data preparation, data processing, analysis and visualisation</p>
+          <div class="cert-issuer">Google / Coursera &middot; 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cert-info">
+          <h4>Google Digital Marketing &amp; E-Commerce Certificate</h4>
+          <p>Attract &amp; engage customers, digital marketing strategy and e-commerce fundamentals</p>
+          <div class="cert-issuer">Google / Coursera &middot; 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cert-info">
+          <h4>Canva Design Certificate</h4>
+          <p>Graphic design, marketing visuals, social media content and brand materials</p>
+          <div class="cert-issuer">Canva</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cert-info">
+          <h4>Acalytica Landing Page Certificate</h4>
+          <p>Landing page design, conversion optimisation and digital marketing</p>
+          <div class="cert-issuer">Acalytica</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cert-info">
+          <h4>Teacher Record Certificate</h4>
+          <p>Formal teaching qualification supporting NATED lecturing and curriculum delivery</p>
+          <div class="cert-issuer">2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cert-info">
+          <h4>National N Diploma – Civil Engineering (NQF Level 6)</h4>
+          <p>Engineering principles, construction management and technical systems</p>
+          <div class="cert-issuer">ROSTEC Technical FET College &middot; 2019–2022</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="cert-info">
+          <h4>N6 Certificate – Hospitality &amp; Catering Services</h4>
+          <p>Hospitality operations, catering management and customer service</p>
+          <div class="cert-issuer">DFPCFET College &middot; 2023–2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line" />
+
+<!-- CONTACT -->
+<section class="section dark-section" id="contact">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="section-label">Get in Touch</div>
+      <div class="section-title">Let's Work Together</div>
+      <p class="section-sub">Available for remote work globally. Reach out via WhatsApp for the fastest response.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <a href="https://wa.me/27643730345" target="_blank" class="contact-tile">
+          <div class="contact-tile-label">WhatsApp</div>
+          <div class="contact-tile-value">+27 64 373 0345</div>
+        </a>
+        <a href="mailto:muchemwatp@gmail.com" class="contact-tile">
+          <div class="contact-tile-label">Email</div>
+          <div class="contact-tile-value white">muchemwatp@gmail.com</div>
+        </a>
+        <div class="contact-tile">
+          <div class="contact-tile-label">Location</div>
+          <div class="contact-tile-value white">Pretoria, South Africa &middot; Remote Worldwide</div>
+        </div>
+        <div class="contact-tile">
+          <div class="contact-tile-label">Availability</div>
+          <div class="contact-tile-value" style="color:#22c55e;">Open to work &middot; Part-time / Full-time / Contract</div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <input type="text" placeholder="Your Name" />
+        <input type="email" placeholder="Your Email" />
+        <input type="text" placeholder="Subject (e.g. VA Role, Marketing Project)" />
+        <textarea rows="5" placeholder="Tell me about the role or project..."></textarea>
+        <a href="https://wa.me/27643730345?text=Hi%20Tinashe%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20role" target="_blank" class="contact-submit">Send Message on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Tinashe <span>Muchemwa</span></div>
+  <p class="footer-sub">Virtual Assistant &middot; Digital Marketing &middot; Data Analytics &middot; Online Teaching</p>
+  <div class="footer-links">
+    <a href="mailto:muchemwatp@gmail.com">Email</a>
+    <a href="https://wa.me/27643730345" target="_blank">WhatsApp</a>
+    <a href="#skills">Skills</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#certificates">Certificates</a>
+  </div>
+  <p class="footer-copy">&copy; 2025 Tinashe Muchemwa. All rights reserved. &middot; Pretoria, South Africa</p>
+</footer>
+
+</body>
+</html>
